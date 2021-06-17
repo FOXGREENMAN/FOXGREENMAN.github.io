@@ -1,0 +1,747 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mala">
+<head>
+  
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+
+  <link href='//fonts.googleapis.com/css?family=Lato:300,400,700,400italic&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.5.1"/>
+
+
+
+
+  <meta name="keywords" content="math," />
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.5.1" />
+
+
+<meta name="description" content="本文转载自知乎专栏，如需引用请告知原作者或注明以下出处by 包遵信from https:&#x2F;&#x2F;zhuanlan.zhihu.com&#x2F;p&#x2F;45078785">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【转】黎曼假设说的是什么？">
+<meta property="og:url" content="http://yoursite.com/2018/09/22/Riemann_hypothesis_zhihu/index.html">
+<meta property="og:site_name" content="FOXMAN&#39;s club">
+<meta property="og:description" content="本文转载自知乎专栏，如需引用请告知原作者或注明以下出处by 包遵信from https:&#x2F;&#x2F;zhuanlan.zhihu.com&#x2F;p&#x2F;45078785">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://yoursite.com/2018/09/22/Riemann_hypothesis_zhihu/r_hy_0.png">
+<meta property="article:published_time" content="2018-09-21T19:35:13.000Z">
+<meta property="article:modified_time" content="2018-09-23T05:37:56.000Z">
+<meta property="article:author" content="FOXMAN">
+<meta property="article:tag" content="math">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://yoursite.com/2018/09/22/Riemann_hypothesis_zhihu/r_hy_0.png">
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mala',
+    sidebar: 'post'
+  };
+</script>
+
+  <title> 【转】黎曼假设说的是什么？ | FOXMAN's club </title>
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  <!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a target="_blank" rel="noopener" href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+  
+
+
+
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand" rel="start">
+      <span class="logo">
+        <i class="icon-next-logo"></i>
+      </span>
+      <span class="site-title">UP IN THE AIR</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon icon-next-home"></i> <br />
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            <i class="menu-item-icon icon-next-categories"></i> <br />
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            <i class="menu-item-icon icon-next-archives"></i> <br />
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            <i class="menu-item-icon icon-next-tags"></i> <br />
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            <i class="menu-item-icon icon-next-about"></i> <br />
+            About
+          </a>
+        </li>
+      
+
+      
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content"> 
+
+  <div id="posts" class="posts-expand">
+    
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              【转】黎曼假设说的是什么？
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          Posted on
+          <time itemprop="dateCreated" datetime="2018-09-22T03:35:13+08:00" content="2018-09-22">
+            2018-09-22
+          </time>
+        </span>
+
+        
+          <span class="post-category" >
+            &nbsp; | &nbsp; In
+            
+              <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                <a href="/categories/have-a-green-dai/" itemprop="url" rel="index">
+                  <span itemprop="name">have a green dai</span>
+                </a>
+              </span>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <span itemprop="articleBody"><blockquote>
+<p> <strong>本文转载自知乎专栏，如需引用请告知原作者或注明以下出处</strong><br>by 包遵信<br>from <a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/45078785">https://zhuanlan.zhihu.com/p/45078785</a></p>
+</blockquote>
+<span id="more"></span>
+
+<p><img src="./r_hy_0.png"><br><strong>按</strong>：最近 1966 年菲尔兹奖得主，英国的迈克尔·阿蒂亚爵士，声称证明了黎曼假设，好几个朋友问我黎曼假设到底是什么。这些朋友受过大学教育，但并非数学专业，太平白的解释看了嫌没意思，稍微高深点的（比如 Wikipedia 的<a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Riemann_hypothesis">页面</a>或者 Clay Institute 为黎曼假设悬赏 100 万美元时让 Bombieri 做的<a target="_blank" rel="noopener" href="https://www.claymath.org/sites/default/files/official_problem_description.pdf">介绍</a>）又看不懂，所以我决定尝试提供一个介于两者之间的内容。<br>写这一篇也意味着一些心态的变化——以往每次有数学领域的大新闻都觉得媒体和记者在胡说八道。事实上，记者也不是天才，不教他也不会懂，懂一点点的人有必要做些努力。在知乎专栏试试，可能还能让一些网友知道得稍微多一点，懂得多一点以后如果有兴趣还可以去看<a target="_blank" rel="noopener" href="https://www.changhai.org/articles/science/mathematics/riemann_hypothesis/">卢昌海关于黎曼假设的系列文章</a>。<br>最后，现在写也不亏，下次有人说黎曼假设被证明的时候，这篇文章也许也还能派上用场。<br>以下正文。本文假设读者知道 <strong>复数</strong>和 <strong>幂级数</strong>的概念，希望聪明的高中生能看懂。数学系的念完大二可能就不用看了，本文真的不够硬核，属于科普之前的科普。</p>
+<hr>
+<h3 id="零-四句话说清黎曼假设"><a href="#零-四句话说清黎曼假设" class="headerlink" title="零. 四句话说清黎曼假设"></a>零. 四句话说清黎曼假设</h3><p>如果要用四句话说清楚，那黎曼假设说的是下面的内容：</p>
+<ol>
+<li>黎曼 zeta 函数是一个复变量的 <strong>复值函数</strong>，记作${\zeta(s)}$.</li>
+<li>这个函数在复变量 ${s}$ 的实部大于 1 的时候由 ${\zeta(s) := \sum^\infty_{n=1}\dfrac{1}{n^s}}$定义。</li>
+<li>这个函数可以 <strong>解析延拓</strong>到 “整个” 复平面上，成为复平面上的一个 <strong>亚纯函数</strong>。</li>
+<li>这个函数的非平凡零点，实部等于 ${\dfrac{1}{2}}$ .</li>
+</ol>
+<p>以下是详情，每句用一小章解释。</p>
+<h3 id="第一句"><a href="#第一句" class="headerlink" title="第一句"></a>第一句</h3><p>复数是形如 ${a+bi}$ , 其中 ${a}$,${b}$是实数，且${i^2=-1}$的数字。复数可以加、减、乘、除——用术语说，复数构成一个 <strong>数域</strong> (field).  复数也可以用模和辐角写成 ${z=re^{i\theta}}$ 的形式。</p>
+<p>我们可以把实数画在数轴上，在复数的情形，因为有两个实数，所以每个复数可以对应于平面上的一个点，这个平面叫复平面。上述的 ${a}$ ， ${b}$ 对应于复平面上的直角坐标； ${r}$ ， ${\theta}$ 对应于复平面上的极坐标。</p>
+<p>很多我们熟悉的函数，比如多项式函数，正弦${\sin x}$、余弦${\cos x}$、指数函数${e^x}$，都可以扩展到整个复平面上，成为一个复变量的复值函数：即输入的值 ${z}$ 是一个复数，输出的值比如${f(z)=\sin z}$也是一个复数。指数函数的扩展定义为${e^{a+bi}:=e^a(\cos b+i \sin b)}$，可以看见，${b=0}$即${a+bi}$是实数的时候，函数值就是对实数定义的指数函数的值 ${e^a}$ ，这就是 “扩展” 两个字的意思。（实际上，高中见过的函数，基本上都可以做到这一点，除了对数函数的情形要稍微复杂一些。）</p>
+<h3 id="第二句"><a href="#第二句" class="headerlink" title="第二句"></a>第二句</h3><p>有个神秘的函数叫${\zeta}$（zeta, 泽塔函数），欧拉和黎曼都研究过。这个函数的原始定义并不太复杂，但要用到一个无穷求和：${\zeta(s):=1^{-s}+2^{s}+\cdots+n^{s}+\cdots}$</p>
+<p>对欧拉而言，括号里的 ${s}$ 是 <strong>实数</strong>，函数值也是 <strong>实数</strong>。这时候从这个函数出发能发现一些信息——比如欧拉用这个函数给了 “素数有无穷多个” 这个结论的一个证明。欧拉也得到过 ${\zeta(2)=1+\dfrac{1}{4}+\dfrac{1}{9}+\dfrac{1}{16}+\cdots=\dfrac{\pi^2}{6}}$ 这一结论。</p>
+<p>也许读者隐约能感受到，这函数跟 <strong>素数</strong>有点关系。但这还没发挥这个函数的全部威力。黎曼观察到，把这个定义看做一个复变量的复值函数更加厉害。得到的复值函数叫黎曼${\zeta}$函数。</p>
+<p>${s}$ 是复数的时候 ${2^{-s}}$ 是什么意思呢？根据定义，${2^{-s}:=e^{-s \ln{2}}}$，其中${e^{z}}$是前面提到的复变量指数函数，${\ln{2}}$是 2 的自然对数。给定复数 ${s}$ ，对每个自然数 ${n}$ 计算 ${n^{-s}}$ , 再对全体 ${n}$  <strong>求和</strong>，得到的结果就是${\zeta}$在 ${s}$ 这一点的值 ${\zeta(s)}$。</p>
+<p>上面的求和并不总收敛——比如${s=0}$的时候它就是${1+1+\cdots+1+\cdots}$，但是我们可以证明，${s=a+bi}$的实部${a&gt;1}$的时候，这个求和是收敛的，因为总有${|n^{-s}|&lt;n^{-a}}$。（下文一律用${a}$表示${s}$的实部。）</p>
+<p>实部${a=1}$的复数是复平面上的一条竖线，这样我们就得到了${\zeta(s)}$在这条竖线右边（即实部大于 1 的地方）的定义。而且这个函数有个很好的性质，即它在这条线右边是一个 <strong>全纯函数</strong>。</p>
+<h3 id="第三句"><a href="#第三句" class="headerlink" title="第三句"></a>第三句</h3><p>事实上，${\zeta(s)}$在那条竖线的左边更有趣一些——但是怎么把${\zeta(s)}$的定义扩展到那条线左边呢？这里说的扩展，不是随便写个定义（比如竖线左边的函数值定义成都是 0），而是保持那个 “很好的性质” 的扩展。</p>
+<p>直接给个简单粗暴的办法，理由不赘：考虑${\zeta(s)\cdot(s-1)}$, 这在实部大于 1 的时候有定义，随便找个有定义的点，比如在${z=2}$那一点，做个泰勒展开：$${\zeta(s)\cdot(s-1)=\sum^\infty_{n=0}a_n(s-2)^n}$$<br> ，其中${a_n}$是某个复数。</p>
+<p>右边这个 <strong>幂级数</strong>，在整个复平面上都收敛。如果把右边这个幂级数定义的函数记作${f(s)}$的话，${f(s)}$是整个复平面上的全纯函数。${\zeta(s):=\dfrac{f(s)}{s-1}}$就能当做黎曼${\zeta}$函数在复平面上的定义，这是复平面上的一个 <strong>亚纯函数</strong>。它有很好的对称性（一个密切相关的函数，${\xi(s)}$，满足一个很对称的函数方程${\xi(s)=\xi(1-s)}$.）。</p>
+<h3 id="第四句"><a href="#第四句" class="headerlink" title="第四句"></a>第四句</h3><p>黎曼${\zeta}$函数什么时候是 0 呢？有一系列不太有趣的答案：在${s=-2,-4,-6,\cdots,-2n,\cdots}$的时候它是 0. 但是不止这些，它在${0\leq a \leq 1}$这条狭长的带子上，还可能有零点！这些零点叫 <strong>非平凡零点</strong>。</p>
+<p>而且，这些零点包含了关于素数的很重要的信息——比如，可以用来计算小于某个数的素数的个数——关键词 Chebyshev function exact formula 请自行搜索。而著名的关于素数的渐近分布的素数定理，等价于${\zeta(s)}$在${a=1}$上没有零点（不深入计算很难想象，仅仅在实部为 1 这条线上没有零点这个信息就包含了那么丰富的内容）。所以，这些零点很重要。</p>
+<p>关于这些零点，黎曼在 1859 年做出了个重要的猜想，即</p>
+<blockquote>
+<p><strong>黎曼假设</strong>：${\zeta(s)}$的非平凡零点，都位于${a=\dfrac{1}{2}}$这条直线上。</p>
+</blockquote>
+<p>这个猜想 <strong>至今没被证明</strong>。如果它成立，数论里的几乎所有结果，都可以往前迈一大步。</p>
+</span>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/math/" rel="tag">#math</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/10/21/open_outher_app_4_mac/" rel="prev">Mac 下安装软件遇到 "XXX" s damaged and can’t be opened. You should move it to the Trash 解决方案</a>
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/09/11/mac_install_mysql/" rel="next">Mac下安装mysql攻略</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div>
+      
+        <style type="text/css">
+
+    .donate_bar {
+        text-align: center;
+        margin-top : 5%;
+    }
+
+    .donate_bar.hidden {
+        display:none;
+    }
+/*
+    .donate_bar a.btn_donate {
+        display: inline-block;
+        width: 82px;
+        height: 82px;
+        margin-left:auto;
+        margin-right:auto;
+
+        background: url("http://img.t.sinajs.cn/t5/style/images/apps_PRF/e_media/btn_reward.gif") no-repeat;
+        _background: url("http://img.t.sinajs.cn/t5/style/images/apps_PRF/e_media/btn_reward.gif") no-repeat; 
+
+        -webkit-transition: background 0s;
+        -moz-transition: background 0s;
+        -o-transition: background 0s;
+        -ms-transition: background 0s;
+        transition: background 0s;
+    }
+*/
+    .donate_bar a.btn_donate:hover { 
+        // background-position: 0px -82px;
+        color: #87daff;
+    }
+
+    .donate_bar .donate_txt {
+        display: block;
+        color: #9d9d9d;
+        font: 14px/2 "Microsoft Yahei";
+    }
+
+    .bold { 
+        font-weight: bold; 
+    }
+
+    .post-donate a {
+        border-bottom: 0px;
+    }
+
+    #donate_guide table {
+        border: none;
+    }
+
+    #donate_guide td {
+        border-bottom: none;
+        border-right: none;
+        // background: #333333;
+        valign: top;
+    }
+
+</style>
+
+
+
+      
+    </div>
+
+    <div class="post-spread">
+      
+        <div class="bdsharebuttonbox">
+	<a href="#" class="bds_more" data-cmd="more"></a>
+	<a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a>
+	<a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+	<a href="#" class="bds_sqq" data-cmd="sqq" title="分享到QQ好友"></a>
+	<a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a>
+	<a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博"></a>
+	<a href="#" class="bds_douban" data-cmd="douban" title="分享到豆瓣网"></a>
+</div>
+<script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"1","bdSize":"16"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
+
+      
+    </div>
+  </div>
+
+ </div>
+
+        
+
+        
+          <div class="comments" id="comments">
+            
+          </div>
+        
+      </div>
+
+      
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table Of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" src="/images/default_avatar.jpg" alt="" itemprop="image"/>
+          <p class="site-author-name" itemprop="name"></p>
+        </div>
+        <p class="site-description motion-element" itemprop="description"></p>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">19</span>
+              <span class="site-state-item-name">posts</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            <a href="/categories">
+              <span class="site-state-item-count">9</span>
+              <span class="site-state-item-name">categories</span>
+              </a>
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">13</span>
+              <span class="site-state-item-name">tags</span>
+              </a>
+          </div>
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        <div class="links-of-friendly motion-element">
+          
+        </div>
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%9B%B6-%E5%9B%9B%E5%8F%A5%E8%AF%9D%E8%AF%B4%E6%B8%85%E9%BB%8E%E6%9B%BC%E5%81%87%E8%AE%BE"><span class="nav-number">1.</span> <span class="nav-text">零. 四句话说清黎曼假设</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC%E4%B8%80%E5%8F%A5"><span class="nav-number">2.</span> <span class="nav-text">第一句</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC%E4%BA%8C%E5%8F%A5"><span class="nav-number">3.</span> <span class="nav-text">第二句</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC%E4%B8%89%E5%8F%A5"><span class="nav-number">4.</span> <span class="nav-text">第三句</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC%E5%9B%9B%E5%8F%A5"><span class="nav-number">5.</span> <span class="nav-text">第四句</span></a></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner"> <div class="copyright" >
+  
+  &copy; &nbsp; 
+  <span itemprop="copyrightYear">2021
+  </span>
+  <span class="with-love">
+    <i class="icon-next-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">FOXMAN
+  </span>
+</div>
+
+<div class="powered-by">
+  Powered by <a class="theme-link" target="_blank" rel="noopener" href="http://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme by <a class="theme-link" target="_blank" rel="noopener" href="http://blog.idhyt.com">idhyt</a>.<a class="theme-link" target="_blank" rel="noopener" href="https://github.com/idhyt/hexo-theme-next/tree/magiclamp">Mala</a>
+</div>
+
+<!-- busuanzi -->
+
+
+
+ </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+  
+    
+    
+
+  
+
+
+  
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.5.1"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.5.1"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.5.1" id="motion.global"></script>
+
+
+
+
+  <script type="text/javascript" src="/js/nav-toggle.js?v=0.4.5.1"></script>
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.5.1" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      var $indicator = $(indicator);
+      var opacity = action === 'show' ? 0.4 : 0;
+      $indicator.velocity ?
+        $indicator.velocity('stop').velocity({
+          opacity: opacity
+        }, { duration: 100 }) :
+        $indicator.stop().animate({
+          opacity: opacity
+        }, 100);
+    }
+
+  });
+</script>
+
+<script type="text/javascript" id="sidebar.nav">
+  $(document).ready(function () {
+    var html = $('html');
+    var TAB_ANIMATE_DURATION = 200;
+    var hasVelocity = $.isFunction(html.velocity);
+
+    $('.sidebar-nav li').on('click', function () {
+      var item = $(this);
+      var activeTabClassName = 'sidebar-nav-active';
+      var activePanelClassName = 'sidebar-panel-active';
+      if (item.hasClass(activeTabClassName)) {
+        return;
+      }
+
+      var currentTarget = $('.' + activePanelClassName);
+      var target = $('.' + item.data('target'));
+
+      hasVelocity ?
+        currentTarget.velocity('transition.slideUpOut', TAB_ANIMATE_DURATION, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', TAB_ANIMATE_DURATION)
+            .addClass(activePanelClassName);
+        }) :
+        currentTarget.animate({ opacity: 0 }, TAB_ANIMATE_DURATION, function () {
+          currentTarget.hide();
+          target
+            .stop()
+            .css({'opacity': 0, 'display': 'block'})
+            .animate({ opacity: 1 }, TAB_ANIMATE_DURATION, function () {
+              currentTarget.removeClass(activePanelClassName);
+              target.addClass(activePanelClassName);
+            });
+        });
+
+      item.siblings().removeClass(activeTabClassName);
+      item.addClass(activeTabClassName);
+    });
+
+    $('.post-toc a').on('click', function (e) {
+      e.preventDefault();
+      var targetSelector = escapeSelector(this.getAttribute('href'));
+      var offset = $(targetSelector).offset().top;
+      hasVelocity ?
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        }) :
+        $('html, body').stop().animate({
+          scrollTop: offset
+        }, 500);
+    });
+
+    // Expand sidebar on post detail page by default, when post has a toc.
+    var $tocContent = $('.post-toc-content');
+    if (isDesktop() && CONFIG.sidebar === 'post') {
+      if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+        displaySidebar();
+      }
+    }
+  });
+</script>
+
+
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      if (CONFIG.sidebar === 'always') {
+        displaySidebar();
+      }
+      if (isMobile()) {
+        FastClick.attach(document.body);
+      }
+    });
+  </script>
+
+  
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/lazyload.js"></script>
+  <script type="text/javascript">
+    $(function () {
+      $("#posts").find('img').lazyload({
+        placeholder: "/images/loading.gif",
+        effect: "fadeIn"
+      });
+    });
+  </script>
+</body>
+</html>

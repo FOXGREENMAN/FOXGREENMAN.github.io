@@ -1,0 +1,803 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mala">
+<head>
+  
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+
+  <link href='//fonts.googleapis.com/css?family=Lato:300,400,700,400italic&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.5.1"/>
+
+
+
+
+  <meta name="keywords" content="network," />
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.5.1" />
+
+
+<meta name="description" content="说在前面, 计算机网络其实远远比我们想象的要复杂; 我暂时想不到一个合适的类比, 如果非要说的话,我脑中的第一个印象是那部日本记录片–寿司之神; 这部片子向观众展示了一种大部分人认为”谁都可以做”的料理(事实上也没错); 但实际上真正的日料厨师, 是能够了解寿司这种一个中文单词对应四个日语词汇的料理个中工序有多么复杂和深奥; 单独拿出其中一个部分, 都能录制一部俩小时的纪录片来讲解;  计算机网络">
+<meta property="og:type" content="article">
+<meta property="og:title" content="TCP&#x2F;IP 简谈(I)">
+<meta property="og:url" content="http://yoursite.com/2020/04/29/tcp_ip_brief_talk_I/index.html">
+<meta property="og:site_name" content="FOXMAN&#39;s club">
+<meta property="og:description" content="说在前面, 计算机网络其实远远比我们想象的要复杂; 我暂时想不到一个合适的类比, 如果非要说的话,我脑中的第一个印象是那部日本记录片–寿司之神; 这部片子向观众展示了一种大部分人认为”谁都可以做”的料理(事实上也没错); 但实际上真正的日料厨师, 是能够了解寿司这种一个中文单词对应四个日语词汇的料理个中工序有多么复杂和深奥; 单独拿出其中一个部分, 都能录制一部俩小时的纪录片来讲解;  计算机网络">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://yoursite.com/2020/04/29/tcp_ip_brief_talk_I/tb_0.png">
+<meta property="og:image" content="http://yoursite.com/2020/04/29/tcp_ip_brief_talk_I/tb_1.png">
+<meta property="og:image" content="http://yoursite.com/2020/04/29/tcp_ip_brief_talk_I/tb_2.png">
+<meta property="og:image" content="http://yoursite.com/2020/04/29/tcp_ip_brief_talk_I/tb_3.png">
+<meta property="og:image" content="http://yoursite.com/2020/04/29/tcp_ip_brief_talk_I/tb_4.png">
+<meta property="article:published_time" content="2020-04-29T02:56:57.000Z">
+<meta property="article:modified_time" content="2020-05-16T04:24:26.000Z">
+<meta property="article:author" content="FOXMAN">
+<meta property="article:tag" content="network">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://yoursite.com/2020/04/29/tcp_ip_brief_talk_I/tb_0.png">
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mala',
+    sidebar: 'post'
+  };
+</script>
+
+  <title> TCP/IP 简谈(I) | FOXMAN's club </title>
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  <!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a target="_blank" rel="noopener" href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+  
+
+
+
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand" rel="start">
+      <span class="logo">
+        <i class="icon-next-logo"></i>
+      </span>
+      <span class="site-title">UP IN THE AIR</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon icon-next-home"></i> <br />
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            <i class="menu-item-icon icon-next-categories"></i> <br />
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            <i class="menu-item-icon icon-next-archives"></i> <br />
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            <i class="menu-item-icon icon-next-tags"></i> <br />
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            <i class="menu-item-icon icon-next-about"></i> <br />
+            About
+          </a>
+        </li>
+      
+
+      
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content"> 
+
+  <div id="posts" class="posts-expand">
+    
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              TCP/IP 简谈(I)
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          Posted on
+          <time itemprop="dateCreated" datetime="2020-04-29T10:56:57+08:00" content="2020-04-29">
+            2020-04-29
+          </time>
+        </span>
+
+        
+          <span class="post-category" >
+            &nbsp; | &nbsp; In
+            
+              <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                <a href="/categories/web/" itemprop="url" rel="index">
+                  <span itemprop="name">web</span>
+                </a>
+              </span>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <span itemprop="articleBody"><p>说在前面, 计算机网络其实远远比我们想象的要复杂; 我暂时想不到一个合适的类比, 如果非要说的话,我脑中的第一个印象是那部日本记录片–寿司之神; 这部片子向观众展示了一种大部分人认为”谁都可以做”的料理(事实上也没错); 但实际上真正的日料厨师, 是能够了解寿司这种一个中文单词对应四个日语词汇的料理个中工序有多么复杂和深奥; 单独拿出其中一个部分, 都能录制一部俩小时的纪录片来讲解; </p>
+<p>计算机网络也是这样, 我们看似简单的操作–打开浏览器, 输入网址然后访问你想要的页面; 背后发生的事情其实远超我们的想象, 其中任何一个环节拿出来也都能成为一个独立课题; 我也不认为自己能强大到将里面的细节一一呈现, 所以只选取其中的几个部分, 结合自己的理解做一些分享, 如有谬误欢迎指证;<br>嗯，这是整个系列的大纲，要是没有你需要的东西也可以节省点时间ʕ•͡•ʕ•͡•ʔ•͡•ʕ•͡•ʕ•͡•ʔ•͡•<br>太长不看党可直接看每章小结;</p>
+<span id="more"></span>
+
+<ul>
+<li>TCP/IP协议是什么<ul>
+<li>语言的诞生和信息的传递</li>
+<li>TCP/IP协议与网络通信</li>
+<li>小结</li>
+</ul>
+</li>
+<li>TCP/IP协议能做什么<ul>
+<li>网路如何连接</li>
+<li>协议扮演的角色</li>
+<li>小结</li>
+</ul>
+</li>
+<li>TCP/IP协议怎么做到的<ul>
+<li>TCP/IP协议设计的基本思路</li>
+<li>协议栈内部结构</li>
+<li>协议栈处理数据发送流程简介</li>
+<li>什么是socket以及它能做什么</li>
+<li>TCP/IP和数据包</li>
+<li>UDP的特点和数据收发方式</li>
+<li>小结</li>
+</ul>
+</li>
+</ul>
+<h3 id="TCP-IP协议是什么"><a href="#TCP-IP协议是什么" class="headerlink" title="TCP/IP协议是什么"></a>TCP/IP协议是什么</h3><h4 id="语言的诞生和信息的传递"><a href="#语言的诞生和信息的传递" class="headerlink" title="语言的诞生和信息的传递"></a>语言的诞生和信息的传递</h4><p>信息的传递对于生物的生存繁衍是比不可少的, 无论是动物或者植物, 彼此之间无时不刻都需要传递信息, 共享当前环境变化, 发现天敌规避危险, 或是发现食物等等; 关于语言的诞生, 目前说法不一; 因为语言的诞生要追溯到史前时期, 当时很少有直接留下的历史痕迹供人参考; 这个话题也不是本文的重点, 不过我们可以思考一下语言为什么诞生;<br>也许大部分人的第一反应是”为了传递信息”, 这个想法当然没错; 但如果我们再深入一点思考, 就会引出更多的问题—-</p>
+<ol>
+<li>传递信息的目的是什么?</li>
+<li>如何准确的传递?</li>
+<li>如何更高效的传递?<br>我记得小时候看过探索频道讲一只蜜蜂如何告诉蜂群哪里有足够的花丛供它们采蜜; 首先一只蜜蜂发现一处花丛, 确认之后回到蜂巢, 通过飞行的轨迹告诉伙伴们这个信息, 然后蜂群会跟随其到达花丛;<br>姑且不论我小时候的记忆是否有偏差, 或者蜜蜂是否真的这样采蜜; 但想想这个过程, 刚刚的三个问题里, 前两个似乎没什么问题; 但显而易见的这不是一个高效的信息传递方式, 如果那只蜜蜂可以直接告知蜂群花丛的准确位置, 而不用自己再带路的话, 它就可以利用蜂群前往花丛的时间去发现下一处采蜜地点, 这样整个蜂群获取食物的效率将大大提升, 比如下面是一只普通的蜜蜂和一只高效的蜜蜂(dog); </li>
+</ol>
+<p><img src="./tb_0.png"></p>
+<p>知乎上常有这样的月经问题—-其他如果恐龙没有灭绝是否能发展出文明, 或者人类为什么能区别于其他物种发展文明并统治地球; 其中有一个高赞答案把文明的发展和语言以及文字的出现联系在了一起; 这个想法大部分我是赞同的, 对于信息的抽象能力必然是提高了其传递的效率, 减少了沟通成本; 举个简单的栗子:用阿拉伯数字和罗马数字同时表示一百万, 前者表示为 1,000,000 即可, 而罗马数字最高用M表示1000, 再往上就没有了; 所以你想书写一百万的话, 需要写一千个M… 所以不可否认的是, 无论对于任何一项工作, 团体沟通成本的降低必然是一个绝对性的优势;<br>回到我们刚刚思考的三个问题, 可以得出一些简单的结论:</p>
+<ol>
+<li>传递信息的目的是什么?<br>团体之间共享数据(信息)</li>
+<li>如何准确的传递?<br>构建一套双方认可的校验机制;</li>
+<li>如何更高效的传递?<br>构建一套在不丢失数据的情况下尽可能的抽象和包装信息的机制;</li>
+</ol>
+<h4 id="TCP-IP协议与网络通信"><a href="#TCP-IP协议与网络通信" class="headerlink" title="TCP/IP协议与网络通信"></a>TCP/IP协议与网络通信</h4><p>先回答一个问题: 什么是TCP/IP协议?<br>一般情况下我在网上google某个问题, 都会遇到两种答案, 一种是说人话的, 一种是不说的; 这两者的存在都有各自的道理, 就和同性恋和异性恋一样; 所以我基本都能理解, 采用哪种看具体情况而定; 回到刚刚的问题, 先看看不说的;<br>来自WIKI的解释</p>
+<blockquote>
+<p>互联网协议套件（英語：Internet Protocol Suite，縮寫IPS）[1]是一個网络通訊模型，以及一整個网络传输协议家族，為網際网络的基礎通訊架構。它常被通稱為TCP/IP协议族（英語：TCP/IP Protocol Suite，或TCP/IP Protocols），简称TCP/IP[2]。因為该協定家族的兩個核心協定：TCP（传输控制协议）和IP（网际协议），為该家族中最早通過的標準[3]。由於在網絡通讯协议普遍采用分层的结构，当多个层次的协议共同工作时，类似计算机科学中的堆栈，因此又被称为TCP/IP协议栈（英語：TCP/IP Protocol Stack）[4][5] 。这些协议最早发源于美国国防部（縮寫為DoD）的ARPA网项目，因此也被稱作DoD模型（DoD Model）[6]。這個協定套組由互联网工程任务组負責維護。</p>
+</blockquote>
+<p>不知道其他人看是什么感觉, 反正我初中看的时候抛开英文单词其他中文凑一起看完大概就这表情…</p>
+<p><img src="./tb_1.png"></p>
+<p>其实这个可以理解, 因为我自己也想了很久, 发现凭借现在对这知识的理解根本无法用简洁的一句话准确的表达TCP/IP协议的整个精髓; 但我还是想尝试一下;<br>当一个非同行从业者(或者面试官)问起你什么是TCP/IP的时候, 可以这样回答(说人话的部分):</p>
+<blockquote>
+<p>TCP/IP协议是为了应对互联网上传输数据的不可靠性, 区别于UDP协议设计的一套可靠的用于端到端的字节流传输协议; 它为了应对互联网中不同网络的不同带宽, 延迟, 数据包大小和不同的拓扑结构而设计了一套能自适应这些不同点的机制来确保数据的可靠传输;</p>
+</blockquote>
+<p>简而言之, TCP/IP协议, 按简单的理解就是字面上协议的意思; 只不过它的服务对象是互联网上的两个终端, 再白丁一点的解释, 就是两台设备, 例如两台电脑, 然后它的特点就是可靠传输; 它和UDP的区别, 就像一个是放在你小区门口挂在保安室外面栏杆上的外卖, 而另一个是敲开你家门送到你手里的; </p>
+<p>网络通信往大了讲是一个很宽泛, 涉猎面积很广的课题; 我从小写作文就和唱歌一样, 一不留神就跑题(调)很远, 所以为了避免这个情况, 这里只说侠义上的网络通信, 即Internet, 由于TCP/IP的提出和阿帕网(ARPANET)间隔时间太短, 基本上都会放到一起介绍; 阿帕网作为伟大的互联网的前身, 创立于1962年, 十二年后TCP/IP的设计思想就提出了; 而那之后1980年到1990年开始扩张并进入亚洲; 在1990年的圣诞节万维网的所有装备一一解锁:超文本传输协议(HTTP), 超文本标记语言(HTML), 第一个网页浏览器等等;<br>网络通信的理解可以TCP/IP协议一样拆开来看, 网络+通信; 离开网络的通信我们耳熟能详, 从课本里听到的烽火狼烟信鸽, 到生活中随处可见的长途电话或短距对讲机; 而这些的传输信息和形式都极为有限; 例如画面和图像的互动传递在网络通信时代到来之前成本是极其高昂的; 而网络通信则把这些变得无限简单; 两台终端, 一个可靠的网络, 坐地日行八万里就有了全新的释义;<br>要说清楚网络通信(我并不想(dog)), 就离不开OSI模型, 而TCP/IP也有自己的分层模型, 二者可以对比来看, 比较容易理解; 不理解也没啥, 我会试着讲清楚, 先看个图; </p>
+<p><img src="./tb_2.png">图片源自网络</p>
+<p>OSI模型要讲清楚值得单独用一篇文章来聊聊, 这个系列里暂时只介绍TCP/IP的模型; 如果简单理解网络模型都可以从下往上看, 或者说–从抽象往具体看; 计算机里例如内存, 指令集, 网络模型这样的东西比较难以理解, 就是因为它们的存在过于抽象; 而显示屏, 主板, 键盘鼠标, 甚至内存条; 这些都很具体, 所以理解起来简单不少; 网络模型的理解也可以先从我们看得到的东西开始了解, 即物理层; 一台电脑想要连接上网络, 网卡必不可少; 无论是有线还是无线, 都需要一个接入外部网络的出口; 其次是和中间设备的连接线(物理), 通过连接线连接到中间设备, 才能进行网络传输; 这些我们看得见, 摸得着的物理设备几乎都包含在前两层, 这个OSI和TCP/IP是一样的, 也就是上图里的深色部分;<br>而再往上走, 就是比较抽象的部分; 即真正完成网络中数据交换的部分; </p>
+<h4 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h4><ul>
+<li><p>TCP/IP协议是什么<br><code>TCP/IP协议是为了应对互联网上传输数据的不可靠性, 区别于UDP协议设计的一套可靠的用于端到端的字节流传输协议; </code>它为了应对互联网中不同网络的不同带宽, 延迟, 数据包大小和不同的拓扑结构而设计了一套能自适应这些不同点的机制来确保数据的可靠传输; 按简单的理解就是字面上协议的意思; 只不过它的服务对象是互联网上的两个终端, 它的存在对比于UDP可以提供网络上的可靠传输服务; </p>
+</li>
+<li><p>语言的诞生和信息的传递<br>语言的诞生是为了传递信息(可以这样理解)</p>
+</li>
+</ul>
+<ol>
+<li>传递信息的目的是什么?<br>团体之间共享数据(信息)</li>
+<li>如何准确的传递?<br>构建一套双方认可的校验机制;</li>
+<li>如何更高效的传递?<br>构建一套在不丢失数据的情况下尽可能的抽象和包装信息的机制;</li>
+</ol>
+<ul>
+<li>TCP/IP协议与网络通信<br>TCP/IP的五层模型:<br>应用层(TFTP，FTP，HTTP，SNMP，SMTP，DNS，Telnet);<br>传输层(TCP,UDP,RTP);<br>网络层(IP,ICMP,RIP,IGMP);<br>数据链路层(ARP,RARP);<br>物理层(ISO2010，IEEE802,IEEE802.2);</li>
+</ul>
+<h3 id="TCP-IP协议能做什么"><a href="#TCP-IP协议能做什么" class="headerlink" title="TCP/IP协议能做什么"></a>TCP/IP协议能做什么</h3><h4 id="网路如何连接"><a href="#网路如何连接" class="headerlink" title="网路如何连接"></a>网路如何连接</h4><p>下面的图展简单的展示了网络网络如何连接起来, 以及对应设备和五层之间的关系; </p>
+<p><img src="./tb_3.png"></p>
+<p>事实上TCP/IP模型层与层之间的界限并不是非常明确, 至少在前三层是这样的; 你很难从可视化的角度具体的区分到底哪个设备属于哪一层, 事实上也没有这个必要(但如果更专业的区分, 他们之间可以是明确的); 网络模型本身是抽象出的东西, 目的是为了直观和准确的描述数据在整个网络中传递时的形态和发生的事情; 网络的连接过程可以大致简化成下面的流程:</p>
+<ol>
+<li>将已经定义的网址交给浏览器解析出真实的网络端地址;</li>
+<li>生成HTTP请求通知;</li>
+<li>发送请求并得到节点的响应;</li>
+<li>委托协议栈发送出消息体</li>
+<li>计算机将按照协议封装好的网络包通过集线器,路由器转发;</li>
+<li>服务器接收到网络包解析并处理, 然后逆向上述操作完成响应通知;</li>
+</ol>
+<h4 id="协议扮演的角色"><a href="#协议扮演的角色" class="headerlink" title="协议扮演的角色"></a>协议扮演的角色</h4><p>协议和协议栈是不同的东西; 下图展示了协议栈在整个网络传输里具体的位置:</p>
+<p><img src="./tb_4.png">图片来源: references[2]</p>
+<p>协议简言之就是人为定义的用于两台终端进行网络通信的一套共通标注; 而协议栈则可以理解为函数库, 它是个中协议的总和, 而且其中的协议是有对应的层级关系的, 即上层到下层, 从其名字可以体现出对其中协议的调用顺序(栈这里作为计算机术语, 可以自行google); 于是我们这里可以得出结论, 即协议在整个网络连接中扮演了承上启下的作用; 它介于应用程序和网卡之间, 将浏览器或程序产生的数据按照规则封装成数据包并传递给下一层;  </p>
+<h4 id="小结-1"><a href="#小结-1" class="headerlink" title="小结"></a>小结</h4><p>了解了网络的连接方式, 和协议在当中扮演的角色; 就能明确协议具体能做的事情了;<br><code>协议介于应用程序和网卡之间, 负责按照服务端和客户端约定好的标注完成数据包的封装; 提供给下一个网络层进行传输;</code></p>
+<p>(未完持续)</p>
+<h3 id="references："><a href="#references：" class="headerlink" title="references："></a>references：</h3><p>[1] <a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/33889997">https://zhuanlan.zhihu.com/p/33889997</a><br>[2] <a target="_blank" rel="noopener" href="https://book.douban.com/subject/26941639/">https://book.douban.com/subject/26941639/</a><br>[3] <a target="_blank" rel="noopener" href="https://book.douban.com/subject/10510747/">https://book.douban.com/subject/10510747/</a></p>
+</span>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/network/" rel="tag">#network</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2020/05/05/tcp_ip_brief_talk_II/" rel="prev">TCP/IP 简谈(II)</a>
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/04/20/String_simple_analysis/" rel="next">String 浅析</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div>
+      
+        <style type="text/css">
+
+    .donate_bar {
+        text-align: center;
+        margin-top : 5%;
+    }
+
+    .donate_bar.hidden {
+        display:none;
+    }
+/*
+    .donate_bar a.btn_donate {
+        display: inline-block;
+        width: 82px;
+        height: 82px;
+        margin-left:auto;
+        margin-right:auto;
+
+        background: url("http://img.t.sinajs.cn/t5/style/images/apps_PRF/e_media/btn_reward.gif") no-repeat;
+        _background: url("http://img.t.sinajs.cn/t5/style/images/apps_PRF/e_media/btn_reward.gif") no-repeat; 
+
+        -webkit-transition: background 0s;
+        -moz-transition: background 0s;
+        -o-transition: background 0s;
+        -ms-transition: background 0s;
+        transition: background 0s;
+    }
+*/
+    .donate_bar a.btn_donate:hover { 
+        // background-position: 0px -82px;
+        color: #87daff;
+    }
+
+    .donate_bar .donate_txt {
+        display: block;
+        color: #9d9d9d;
+        font: 14px/2 "Microsoft Yahei";
+    }
+
+    .bold { 
+        font-weight: bold; 
+    }
+
+    .post-donate a {
+        border-bottom: 0px;
+    }
+
+    #donate_guide table {
+        border: none;
+    }
+
+    #donate_guide td {
+        border-bottom: none;
+        border-right: none;
+        // background: #333333;
+        valign: top;
+    }
+
+</style>
+
+
+
+      
+    </div>
+
+    <div class="post-spread">
+      
+        <div class="bdsharebuttonbox">
+	<a href="#" class="bds_more" data-cmd="more"></a>
+	<a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a>
+	<a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+	<a href="#" class="bds_sqq" data-cmd="sqq" title="分享到QQ好友"></a>
+	<a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a>
+	<a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博"></a>
+	<a href="#" class="bds_douban" data-cmd="douban" title="分享到豆瓣网"></a>
+</div>
+<script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"1","bdSize":"16"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
+
+      
+    </div>
+  </div>
+
+ </div>
+
+        
+
+        
+          <div class="comments" id="comments">
+            
+          </div>
+        
+      </div>
+
+      
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table Of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" src="/images/default_avatar.jpg" alt="" itemprop="image"/>
+          <p class="site-author-name" itemprop="name"></p>
+        </div>
+        <p class="site-description motion-element" itemprop="description"></p>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">19</span>
+              <span class="site-state-item-name">posts</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            <a href="/categories">
+              <span class="site-state-item-count">9</span>
+              <span class="site-state-item-name">categories</span>
+              </a>
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">13</span>
+              <span class="site-state-item-name">tags</span>
+              </a>
+          </div>
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        <div class="links-of-friendly motion-element">
+          
+        </div>
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#TCP-IP%E5%8D%8F%E8%AE%AE%E6%98%AF%E4%BB%80%E4%B9%88"><span class="nav-number">1.</span> <span class="nav-text">TCP&#x2F;IP协议是什么</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%AF%AD%E8%A8%80%E7%9A%84%E8%AF%9E%E7%94%9F%E5%92%8C%E4%BF%A1%E6%81%AF%E7%9A%84%E4%BC%A0%E9%80%92"><span class="nav-number">1.1.</span> <span class="nav-text">语言的诞生和信息的传递</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#TCP-IP%E5%8D%8F%E8%AE%AE%E4%B8%8E%E7%BD%91%E7%BB%9C%E9%80%9A%E4%BF%A1"><span class="nav-number">1.2.</span> <span class="nav-text">TCP&#x2F;IP协议与网络通信</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%B0%8F%E7%BB%93"><span class="nav-number">1.3.</span> <span class="nav-text">小结</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#TCP-IP%E5%8D%8F%E8%AE%AE%E8%83%BD%E5%81%9A%E4%BB%80%E4%B9%88"><span class="nav-number">2.</span> <span class="nav-text">TCP&#x2F;IP协议能做什么</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%BD%91%E8%B7%AF%E5%A6%82%E4%BD%95%E8%BF%9E%E6%8E%A5"><span class="nav-number">2.1.</span> <span class="nav-text">网路如何连接</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8D%8F%E8%AE%AE%E6%89%AE%E6%BC%94%E7%9A%84%E8%A7%92%E8%89%B2"><span class="nav-number">2.2.</span> <span class="nav-text">协议扮演的角色</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%B0%8F%E7%BB%93-1"><span class="nav-number">2.3.</span> <span class="nav-text">小结</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#references%EF%BC%9A"><span class="nav-number">3.</span> <span class="nav-text">references：</span></a></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner"> <div class="copyright" >
+  
+  &copy; &nbsp; 
+  <span itemprop="copyrightYear">2021
+  </span>
+  <span class="with-love">
+    <i class="icon-next-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">FOXMAN
+  </span>
+</div>
+
+<div class="powered-by">
+  Powered by <a class="theme-link" target="_blank" rel="noopener" href="http://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme by <a class="theme-link" target="_blank" rel="noopener" href="http://blog.idhyt.com">idhyt</a>.<a class="theme-link" target="_blank" rel="noopener" href="https://github.com/idhyt/hexo-theme-next/tree/magiclamp">Mala</a>
+</div>
+
+<!-- busuanzi -->
+
+
+
+ </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+  
+    
+    
+
+  
+
+
+  
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.5.1"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.5.1"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.5.1" id="motion.global"></script>
+
+
+
+
+  <script type="text/javascript" src="/js/nav-toggle.js?v=0.4.5.1"></script>
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.5.1" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      var $indicator = $(indicator);
+      var opacity = action === 'show' ? 0.4 : 0;
+      $indicator.velocity ?
+        $indicator.velocity('stop').velocity({
+          opacity: opacity
+        }, { duration: 100 }) :
+        $indicator.stop().animate({
+          opacity: opacity
+        }, 100);
+    }
+
+  });
+</script>
+
+<script type="text/javascript" id="sidebar.nav">
+  $(document).ready(function () {
+    var html = $('html');
+    var TAB_ANIMATE_DURATION = 200;
+    var hasVelocity = $.isFunction(html.velocity);
+
+    $('.sidebar-nav li').on('click', function () {
+      var item = $(this);
+      var activeTabClassName = 'sidebar-nav-active';
+      var activePanelClassName = 'sidebar-panel-active';
+      if (item.hasClass(activeTabClassName)) {
+        return;
+      }
+
+      var currentTarget = $('.' + activePanelClassName);
+      var target = $('.' + item.data('target'));
+
+      hasVelocity ?
+        currentTarget.velocity('transition.slideUpOut', TAB_ANIMATE_DURATION, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', TAB_ANIMATE_DURATION)
+            .addClass(activePanelClassName);
+        }) :
+        currentTarget.animate({ opacity: 0 }, TAB_ANIMATE_DURATION, function () {
+          currentTarget.hide();
+          target
+            .stop()
+            .css({'opacity': 0, 'display': 'block'})
+            .animate({ opacity: 1 }, TAB_ANIMATE_DURATION, function () {
+              currentTarget.removeClass(activePanelClassName);
+              target.addClass(activePanelClassName);
+            });
+        });
+
+      item.siblings().removeClass(activeTabClassName);
+      item.addClass(activeTabClassName);
+    });
+
+    $('.post-toc a').on('click', function (e) {
+      e.preventDefault();
+      var targetSelector = escapeSelector(this.getAttribute('href'));
+      var offset = $(targetSelector).offset().top;
+      hasVelocity ?
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        }) :
+        $('html, body').stop().animate({
+          scrollTop: offset
+        }, 500);
+    });
+
+    // Expand sidebar on post detail page by default, when post has a toc.
+    var $tocContent = $('.post-toc-content');
+    if (isDesktop() && CONFIG.sidebar === 'post') {
+      if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+        displaySidebar();
+      }
+    }
+  });
+</script>
+
+
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      if (CONFIG.sidebar === 'always') {
+        displaySidebar();
+      }
+      if (isMobile()) {
+        FastClick.attach(document.body);
+      }
+    });
+  </script>
+
+  
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/lazyload.js"></script>
+  <script type="text/javascript">
+    $(function () {
+      $("#posts").find('img').lazyload({
+        placeholder: "/images/loading.gif",
+        effect: "fadeIn"
+      });
+    });
+  </script>
+</body>
+</html>

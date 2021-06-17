@@ -1,0 +1,789 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mala">
+<head>
+  
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+
+  <link href='//fonts.googleapis.com/css?family=Lato:300,400,700,400italic&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.5.1"/>
+
+
+
+
+  <meta name="keywords" content="http," />
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.5.1" />
+
+
+<meta name="description" content="lolo的工作 最近开始上道了, 网络编程有很多可以说的东西; 这个是今天解决问题的时候遇到的, 就顺带整理一下;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="chrome浏览器开发者模式(F12)和网络编程基础">
+<meta property="og:url" content="http://yoursite.com/2020/09/15/chrome_f12/index.html">
+<meta property="og:site_name" content="FOXMAN&#39;s club">
+<meta property="og:description" content="lolo的工作 最近开始上道了, 网络编程有很多可以说的东西; 这个是今天解决问题的时候遇到的, 就顺带整理一下;">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://yoursite.com/2020/09/15/chrome_f12/ch_0.png">
+<meta property="og:image" content="http://yoursite.com/2020/09/15/chrome_f12/ch_0_1.png">
+<meta property="og:image" content="http://yoursite.com/2020/09/15/chrome_f12/ch_1.png">
+<meta property="og:image" content="http://yoursite.com/2020/09/15/chrome_f12/ch_2.png">
+<meta property="og:image" content="http://yoursite.com/2020/09/15/chrome_f12/ch_3.png">
+<meta property="og:image" content="http://yoursite.com/2020/09/15/chrome_f12/ch_4.png">
+<meta property="og:image" content="http://yoursite.com/2020/09/15/chrome_f12/ch_5.png">
+<meta property="og:image" content="http://yoursite.com/2020/09/15/chrome_f12/ch_5_1.png">
+<meta property="og:image" content="http://yoursite.com/2020/09/15/chrome_f12/ch_6.png">
+<meta property="og:image" content="http://yoursite.com/2020/09/15/chrome_f12/ch_7_0.png">
+<meta property="og:image" content="http://yoursite.com/2020/09/15/chrome_f12/ch_7_1.png">
+<meta property="og:image" content="http://yoursite.com/2020/09/15/chrome_f12/ch_7_2.png">
+<meta property="og:image" content="http://yoursite.com/2020/09/15/chrome_f12/ch_8.png">
+<meta property="og:image" content="http://yoursite.com/2020/09/15/chrome_f12/ch_9.png">
+<meta property="og:image" content="http://yoursite.com/2020/09/15/chrome_f12/ch_10.png">
+<meta property="article:published_time" content="2020-09-15T15:53:41.000Z">
+<meta property="article:modified_time" content="2020-09-15T18:41:40.000Z">
+<meta property="article:author" content="FOXMAN">
+<meta property="article:tag" content="http">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://yoursite.com/2020/09/15/chrome_f12/ch_0.png">
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mala',
+    sidebar: 'post'
+  };
+</script>
+
+  <title> chrome浏览器开发者模式(F12)和网络编程基础 | FOXMAN's club </title>
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  <!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a target="_blank" rel="noopener" href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+  
+
+
+
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand" rel="start">
+      <span class="logo">
+        <i class="icon-next-logo"></i>
+      </span>
+      <span class="site-title">UP IN THE AIR</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon icon-next-home"></i> <br />
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            <i class="menu-item-icon icon-next-categories"></i> <br />
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            <i class="menu-item-icon icon-next-archives"></i> <br />
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            <i class="menu-item-icon icon-next-tags"></i> <br />
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            <i class="menu-item-icon icon-next-about"></i> <br />
+            About
+          </a>
+        </li>
+      
+
+      
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content"> 
+
+  <div id="posts" class="posts-expand">
+    
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              chrome浏览器开发者模式(F12)和网络编程基础
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          Posted on
+          <time itemprop="dateCreated" datetime="2020-09-15T23:53:41+08:00" content="2020-09-15">
+            2020-09-15
+          </time>
+        </span>
+
+        
+          <span class="post-category" >
+            &nbsp; | &nbsp; In
+            
+              <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                <a href="/categories/tool/" itemprop="url" rel="index">
+                  <span itemprop="name">tool</span>
+                </a>
+              </span>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <span itemprop="articleBody"><p>lolo的工作 最近开始上道了, 网络编程有很多可以说的东西; 这个是今天解决问题的时候遇到的, 就顺带整理一下;</p>
+<span id="more"></span>
+
+<ul>
+<li>chrome开发者工具简介；</li>
+<li>HTTP请求之request；</li>
+<li>HTTP请求之response；</li>
+<li>postman工具对应开发者模式；</li>
+<li>通过开发者模式分析接口；</li>
+<li>小结</li>
+</ul>
+<h3 id="chrome开发者工具简介"><a href="#chrome开发者工具简介" class="headerlink" title="chrome开发者工具简介"></a>chrome开发者工具简介</h3><p>工具主要页面:<br><img src="./ch_0.png"><br><img src="./ch_0_1.png"><br>[↑]标注说明:<br>1.页面元素选取工具, 点击后可以选取页面HTML元素并定位到源码;<br>2.网页和H5模式切换, 当页面有区分web页面和H5页面的时候可以用于切换网页显示样式;<br>3.清除当前工作区信息, 当一个页面有很多请求时, 为了避免错过关键接口信息, 可以先清除一次, 再按F5刷新页面观察最新请求;<br>4.查看当前页面网络请求;<br>5.查看当前页面网络请求类型;<br>6.查看当前页面控制台;<br>7.查看当前网页所有源码;</p>
+<h4 id="一个抓取注册操作的简单示例"><a href="#一个抓取注册操作的简单示例" class="headerlink" title="一个抓取注册操作的简单示例"></a>一个抓取注册操作的简单示例</h4><p>目前网络编程里使用的最多的, 就是4和5;<br>下面以一个注册操作为例, 演示一下抓取一系列接口的方式;<br><img src="./ch_1.png"><br>[↑]每次操作前记得清除工作区信息, 否则有的网页会有大量的实时订阅请求;<br>如果没有及时情况, 进行操作时可能会错过关键接口信息;<br><img src="./ch_2.png"><br>[↑]标注说明:<br>1.网络请求类型选择XHR;<br>XHR全称XMLHttpRequest,基本上页面里基于HTTP的接口请求都会在这个类型下展示;<br>2.当前操作发起网络请求的接口名称;<br>3.接口返回状态, 200为成功, 404为资源未找到,更多错误码可google”HTTP错误码”;<br><img src="./ch_3.png"><br>[↑]点击接口后可以看到右侧有接口的交互信息;<br>默认会展示第一个tab里的信息, 也就是Headers里的信息, 如上图所示; 收起来后可以看到总共信息有四类;</p>
+<ul>
+<li>General</li>
+<li>Response Headers</li>
+<li>Request Headers</li>
+<li>Request Payload</li>
+</ul>
+<h4 id="发起接口请求的信息"><a href="#发起接口请求的信息" class="headerlink" title="发起接口请求的信息"></a>发起接口请求的信息</h4><p>下面依次说明<br><strong>General</strong></p>
+<blockquote>
+<p>Request URL: <a target="_blank" rel="noopener" href="https://xxxwww.hiup.pro/fe-ex-api/common/tartCaptcha">https://xxxwww.hiup.pro/fe-ex-api/common/tartCaptcha</a><br>Request Method: POST<br>Status Code: 200<br>Remote Address: 127.0.0.1:10011<br>Referrer Policy: no-referrer-when-downgrade</p>
+</blockquote>
+<p>这里展示的是接口的完整请求url, 接口的请求方式, 如这个接口是POST请求;<br>接口的返回状态(200), 远程地址Remote Address等;<br><strong>Response Headers</strong></p>
+<blockquote>
+<p>access-control-allow-headers: Content-Type,Content-Length, Authorization, Accept,X-Requested-With,exchange-token,exchange-language,exchange-client,exchange-time<br>access-control-allow-headers: X-Requested-With<br>access-control-allow-methods: PUT,POST,GET,DELETE,OPTIONS<br>access-control-allow-methods: GET,POST,OPTIONS<br>access-control-allow-origin: *<br>access-control-max-age: 86400<br>content-encoding: gzip<br>content-type: application/json;charset=utf-8<br>date: Tue, 15 Sep 2020 16:29:22 GMT<br>set-cookie: JSESSIONID=A29F82DDE9689FE11A4E4F587A38BFFE; Path=/; HttpOnly<br>status: 200<br>vary: Accept-Encoding<br>x-powered-by: Jetty</p>
+</blockquote>
+<p>内容较多, 平常调试可以单独关注content-type和status即可; 前者为接口定义的请求类型, 如该接口为json数据类型;<br><strong>Request Headers</strong></p>
+<blockquote>
+<p>:authority: demo<a target="_blank" rel="noopener" href="http://www.hiup.pro/">www.hiup.pro</a><br>:method: POST<br>:path: /fe-ex-api/common/tartCaptcha<br>:scheme: https<br>accept: application/json, text/plain, <em>/</em><br>accept-encoding: gzip, deflate, br<br>accept-language: zh,zh-CN;q=0.9,en-US;q=0.8,en;q=0.7,zh-TW;q=0.6<br>content-length: 1585<br>content-type: application/json;charset=UTF-8<br>cookie: changeSkin=undefined; defSkin=2; cusSkin=2; _ga=GA1.2.99497646.1595212330; lan=zh_CN; lan.sig=5VFF45jC8vSQTlmNRB6KJztI2LCB84eOEAeLk8Kay38; admin-token=4f63899a218580fe3ff60c1bab2d893558fb088382154da7aa1ee74bc0d1ba8f; _gid=GA1.2.1355659675.1600184524; JSESSIONID=FFE91F0B58F76393AE506297E4717232<br>exchange-client: pc<br>exchange-language: zh_CN<br>exchange-token: c5fa97c1140aafea1ef1e84b67503d5e0db18d0ca0ff4819a0ca3f24722407df<br>origin: <a target="_blank" rel="noopener" href="https://demowww.hiup.pro/">https://demowww.hiup.pro</a><br>referer: <a target="_blank" rel="noopener" href="https://demowww.hiup.pro/zh_CN/register">https://demowww.hiup.pro/zh_CN/register</a><br>sec-fetch-dest: empty<br>sec-fetch-mode: cors<br>sec-fetch-site: same-origin<br>user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.102 Safari/537.36</p>
+</blockquote>
+<p>内容较多, 这里通常为接口请求时和客户端商定的内容; 如上述内容中 exchange-language 和 exchange-token均为和客户端约定的自定义内容, 这些内容根据需求而定; 根据这些抓取的信息, 可以判断和客户端的通信是否和文档中约定的一致, 帮助排查问题;</p>
+<p><strong>Request Payload</strong></p>
+<blockquote>
+<p>securityInfo: “{“id”:””,”org”:”demo<a href="http://www.hiup.pro&quot;,&quot;timestamp&quot;:&quot;2020-09-16">www.hiup.pro&quot;,&quot;timestamp&quot;:&quot;2020-09-16</a> 00:29:20”,”userAgent”:”Mozilla/5.0 (Windows NT 10.0; Win64; x64) … “os”:””,”os_version”:””,”resolution”:””,”timezone”:”Asia/Shanghai”,”ctime”:””,”mtime”:””}”<br>uaTime: “2020-09-16 00:29:20”</p>
+</blockquote>
+<p>这里为直观的请求参赛, 可以看到是一个json对象securityInfo 和一个时间字段 uaTime</p>
+<h4 id="接口返回请求的信息"><a href="#接口返回请求的信息" class="headerlink" title="接口返回请求的信息"></a>接口返回请求的信息</h4><p><img src="./ch_4.png"><br>[↑]这两个tag为接口返回的参数;<br>preview 为预览视图, 可以点击展开查看返回的json格式内容</p>
+<h3 id="HTTP请求之request"><a href="#HTTP请求之request" class="headerlink" title="HTTP请求之request"></a>HTTP请求之request</h3><p>简言之, Request是客户端向服务器发起的请求; 它由客户端按照两方约定的形式, 参数列表, 将需要操作的信息和参数传递给服务端;</p>
+<h4 id="请求头-Headers-和请求体-Body"><a href="#请求头-Headers-和请求体-Body" class="headerlink" title="请求头(Headers)和请求体(Body)"></a>请求头(Headers)和请求体(Body)</h4><p>一个常规的httpRequest, 分别由 <strong>请求头</strong> 和 <strong>请求体</strong> 构成;<br>请求头, 在开发者工具中就是上面的 Request Headers;<br>而请求体, 则通常是发送的具体参数内容; 也就是上面的 Request Payload; </p>
+<blockquote>
+<p><strong>请求头</strong>用于封装公有的参数,包括接口请求类型, 编码格式等</p>
+</blockquote>
+<hr>
+<blockquote>
+<p><strong>请求体</strong>用于保存具体向服务端发送的参数内容</p>
+</blockquote>
+<hr>
+<p>生活中我们常见到的外卖的小票, 也可以理解为是一种采用这种方式传递信息;<br><img src="./ch_5.png"><br>上图中, 可以看到小票被明显一条细横线, 两条*号构成的横线分开; 订单号和备注, 可以理解为小票的请求头; 用于告知接收者公共的和重要的信息;<br>而口袋中具体餐品的列表, 则可以理解为请求体, 也就是具体向服务端发起的参数内容;<br>当服务端接收到这样的一个请求后, 会先读取请求头, 确保接口请求的形式和公共信息是否和服务端约定的一致; 如果不一致, 可以放弃读取请求体, 直接拒绝这个请求; 这样就增加了网络请求的处理效率;<br>常见的案例, 就是当服务端接口约定了使用POST请求, 但客户端却发送的是GET请求, 这时候服务端就可以直接拒绝这个请求; 因为客户端采用哪种请求方式, 是写在请求头里的;</p>
+<h3 id="HTTP请求之response"><a href="#HTTP请求之response" class="headerlink" title="HTTP请求之response"></a>HTTP请求之response</h3><p>Web服务器收到客户端的http请求，会针对每一次请求，分别创建一个用于代表请求的request对象和代表响应的response对象;<br>Response对象则用于返回客户端需要的请求数据, 或者是返回接口进行业务操作的结果;<br><img src="./ch_5_1.png"><br>如上面的示例, 服务端返回了请求成功, 以及客户端需要的极验相关的信息;</p>
+<h3 id="postman工具对应开发者模式"><a href="#postman工具对应开发者模式" class="headerlink" title="postman工具对应开发者模式"></a>postman工具对应开发者模式</h3><p><img src="./ch_6.png"><br>[↑] 标注说明:<br>1.接口请求类型, 这个也是包含在请求头里的内容之一;<br>2.这个Headers中的参数,就是需要输入的请求头内容;<br>需要注意的是,大部分接口不设置这个内容也可以访问, 但比如有接口限定了访问类型,就需要在这里设置;例如常用的参数Content-Type,就指定了接口参数的提交方式;<br>application/json 表明接口接收json格式的参数列表;<br>application/x-www-form-urlencoded 表明接口接收的是表单提交格式的参数列表;<br>3.请求头具体的内容;<br>4.请求体(也就是实际向接口发送的参数内容);<br>5.接口响应结果(Response)<br>下面用开发者工具中对应的位置和postman对比一下, 注意接口不是同一个接口, 只为了说明两个工具中对应元素的位置;<br><img src="./ch_7_0.png"><br><img src="./ch_7_1.png"><br><img src="./ch_7_2.png"></p>
+<h3 id="通过开发者模式分析接口"><a href="#通过开发者模式分析接口" class="headerlink" title="通过开发者模式分析接口"></a>通过开发者模式分析接口</h3><p>有了以上基础, 就可以使用开发者工具分析具体接口了;</p>
+<p><img src="./ch_8.png"><br><img src="./ch_9.png"><br>[↑] 在页面分部完成了通过极验验证,发送邮箱验证码两个操作;<br>可以从上面两张图中看到页面操作的网络请求顺序;<br>客户端分部按照 tartCaptcha – &gt; reg_email_chk_info – &gt; emailValidCode 的顺序向服务端发起了三次接口调用;</p>
+<p><img src="./ch_10.png"><br>[↑] 标注说明:<br>1.全局搜索接口名字, 支持模糊查询;<br>2.查询范围选择Module, 按工程项目查询;<br>3.确认当前接口访问的是哪个服务端项目,可缩小查询范围;<br>这里需要对代码足够熟悉, 能够确认当前接口访问的是哪个项目; 因为同样的接口名称可能在多个项目中有相同的名字, 如果排查错了项目, 可能无法解决问题;<br>4.确认具体接口访问代码;</p>
+<h3 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h3><ul>
+<li>chrome开发者工具基本操作, 查看当前页面网络请求(Network); 查看当前页面网络请求类型(XHR);</li>
+<li>抓取请求后主要关注点:General查看接口完整url; Request Payload查看请求参数;</li>
+<li>Request和Response的基本知识;</li>
+<li>postman工具和开发者工具进行对比, 理解如何自己设置请求头等信息;</li>
+<li>如何使用开发者工具定位具体代码;</li>
+</ul>
+<p>【The End】</p>
+</span>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/http/" rel="tag">#http</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2021/06/18/index_something/" rel="prev">聚簇索引or聚集索引以及回表和索引覆盖</a>
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/05/28/go_demo/" rel="next">Go基础语法</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div>
+      
+        <style type="text/css">
+
+    .donate_bar {
+        text-align: center;
+        margin-top : 5%;
+    }
+
+    .donate_bar.hidden {
+        display:none;
+    }
+/*
+    .donate_bar a.btn_donate {
+        display: inline-block;
+        width: 82px;
+        height: 82px;
+        margin-left:auto;
+        margin-right:auto;
+
+        background: url("http://img.t.sinajs.cn/t5/style/images/apps_PRF/e_media/btn_reward.gif") no-repeat;
+        _background: url("http://img.t.sinajs.cn/t5/style/images/apps_PRF/e_media/btn_reward.gif") no-repeat; 
+
+        -webkit-transition: background 0s;
+        -moz-transition: background 0s;
+        -o-transition: background 0s;
+        -ms-transition: background 0s;
+        transition: background 0s;
+    }
+*/
+    .donate_bar a.btn_donate:hover { 
+        // background-position: 0px -82px;
+        color: #87daff;
+    }
+
+    .donate_bar .donate_txt {
+        display: block;
+        color: #9d9d9d;
+        font: 14px/2 "Microsoft Yahei";
+    }
+
+    .bold { 
+        font-weight: bold; 
+    }
+
+    .post-donate a {
+        border-bottom: 0px;
+    }
+
+    #donate_guide table {
+        border: none;
+    }
+
+    #donate_guide td {
+        border-bottom: none;
+        border-right: none;
+        // background: #333333;
+        valign: top;
+    }
+
+</style>
+
+
+
+      
+    </div>
+
+    <div class="post-spread">
+      
+        <div class="bdsharebuttonbox">
+	<a href="#" class="bds_more" data-cmd="more"></a>
+	<a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a>
+	<a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+	<a href="#" class="bds_sqq" data-cmd="sqq" title="分享到QQ好友"></a>
+	<a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a>
+	<a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博"></a>
+	<a href="#" class="bds_douban" data-cmd="douban" title="分享到豆瓣网"></a>
+</div>
+<script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"1","bdSize":"16"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
+
+      
+    </div>
+  </div>
+
+ </div>
+
+        
+
+        
+          <div class="comments" id="comments">
+            
+          </div>
+        
+      </div>
+
+      
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table Of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" src="/images/default_avatar.jpg" alt="" itemprop="image"/>
+          <p class="site-author-name" itemprop="name"></p>
+        </div>
+        <p class="site-description motion-element" itemprop="description"></p>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">19</span>
+              <span class="site-state-item-name">posts</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            <a href="/categories">
+              <span class="site-state-item-count">9</span>
+              <span class="site-state-item-name">categories</span>
+              </a>
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">13</span>
+              <span class="site-state-item-name">tags</span>
+              </a>
+          </div>
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        <div class="links-of-friendly motion-element">
+          
+        </div>
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#chrome%E5%BC%80%E5%8F%91%E8%80%85%E5%B7%A5%E5%85%B7%E7%AE%80%E4%BB%8B"><span class="nav-number">1.</span> <span class="nav-text">chrome开发者工具简介</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%80%E4%B8%AA%E6%8A%93%E5%8F%96%E6%B3%A8%E5%86%8C%E6%93%8D%E4%BD%9C%E7%9A%84%E7%AE%80%E5%8D%95%E7%A4%BA%E4%BE%8B"><span class="nav-number">1.1.</span> <span class="nav-text">一个抓取注册操作的简单示例</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8F%91%E8%B5%B7%E6%8E%A5%E5%8F%A3%E8%AF%B7%E6%B1%82%E7%9A%84%E4%BF%A1%E6%81%AF"><span class="nav-number">1.2.</span> <span class="nav-text">发起接口请求的信息</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%8E%A5%E5%8F%A3%E8%BF%94%E5%9B%9E%E8%AF%B7%E6%B1%82%E7%9A%84%E4%BF%A1%E6%81%AF"><span class="nav-number">1.3.</span> <span class="nav-text">接口返回请求的信息</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#HTTP%E8%AF%B7%E6%B1%82%E4%B9%8Brequest"><span class="nav-number">2.</span> <span class="nav-text">HTTP请求之request</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%AF%B7%E6%B1%82%E5%A4%B4-Headers-%E5%92%8C%E8%AF%B7%E6%B1%82%E4%BD%93-Body"><span class="nav-number">2.1.</span> <span class="nav-text">请求头(Headers)和请求体(Body)</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#HTTP%E8%AF%B7%E6%B1%82%E4%B9%8Bresponse"><span class="nav-number">3.</span> <span class="nav-text">HTTP请求之response</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#postman%E5%B7%A5%E5%85%B7%E5%AF%B9%E5%BA%94%E5%BC%80%E5%8F%91%E8%80%85%E6%A8%A1%E5%BC%8F"><span class="nav-number">4.</span> <span class="nav-text">postman工具对应开发者模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%80%9A%E8%BF%87%E5%BC%80%E5%8F%91%E8%80%85%E6%A8%A1%E5%BC%8F%E5%88%86%E6%9E%90%E6%8E%A5%E5%8F%A3"><span class="nav-number">5.</span> <span class="nav-text">通过开发者模式分析接口</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B0%8F%E7%BB%93"><span class="nav-number">6.</span> <span class="nav-text">小结</span></a></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner"> <div class="copyright" >
+  
+  &copy; &nbsp; 
+  <span itemprop="copyrightYear">2021
+  </span>
+  <span class="with-love">
+    <i class="icon-next-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">FOXMAN
+  </span>
+</div>
+
+<div class="powered-by">
+  Powered by <a class="theme-link" target="_blank" rel="noopener" href="http://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme by <a class="theme-link" target="_blank" rel="noopener" href="http://blog.idhyt.com">idhyt</a>.<a class="theme-link" target="_blank" rel="noopener" href="https://github.com/idhyt/hexo-theme-next/tree/magiclamp">Mala</a>
+</div>
+
+<!-- busuanzi -->
+
+
+
+ </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+  
+    
+    
+
+  
+
+
+  
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.5.1"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.5.1"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.5.1" id="motion.global"></script>
+
+
+
+
+  <script type="text/javascript" src="/js/nav-toggle.js?v=0.4.5.1"></script>
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.5.1" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      var $indicator = $(indicator);
+      var opacity = action === 'show' ? 0.4 : 0;
+      $indicator.velocity ?
+        $indicator.velocity('stop').velocity({
+          opacity: opacity
+        }, { duration: 100 }) :
+        $indicator.stop().animate({
+          opacity: opacity
+        }, 100);
+    }
+
+  });
+</script>
+
+<script type="text/javascript" id="sidebar.nav">
+  $(document).ready(function () {
+    var html = $('html');
+    var TAB_ANIMATE_DURATION = 200;
+    var hasVelocity = $.isFunction(html.velocity);
+
+    $('.sidebar-nav li').on('click', function () {
+      var item = $(this);
+      var activeTabClassName = 'sidebar-nav-active';
+      var activePanelClassName = 'sidebar-panel-active';
+      if (item.hasClass(activeTabClassName)) {
+        return;
+      }
+
+      var currentTarget = $('.' + activePanelClassName);
+      var target = $('.' + item.data('target'));
+
+      hasVelocity ?
+        currentTarget.velocity('transition.slideUpOut', TAB_ANIMATE_DURATION, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', TAB_ANIMATE_DURATION)
+            .addClass(activePanelClassName);
+        }) :
+        currentTarget.animate({ opacity: 0 }, TAB_ANIMATE_DURATION, function () {
+          currentTarget.hide();
+          target
+            .stop()
+            .css({'opacity': 0, 'display': 'block'})
+            .animate({ opacity: 1 }, TAB_ANIMATE_DURATION, function () {
+              currentTarget.removeClass(activePanelClassName);
+              target.addClass(activePanelClassName);
+            });
+        });
+
+      item.siblings().removeClass(activeTabClassName);
+      item.addClass(activeTabClassName);
+    });
+
+    $('.post-toc a').on('click', function (e) {
+      e.preventDefault();
+      var targetSelector = escapeSelector(this.getAttribute('href'));
+      var offset = $(targetSelector).offset().top;
+      hasVelocity ?
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        }) :
+        $('html, body').stop().animate({
+          scrollTop: offset
+        }, 500);
+    });
+
+    // Expand sidebar on post detail page by default, when post has a toc.
+    var $tocContent = $('.post-toc-content');
+    if (isDesktop() && CONFIG.sidebar === 'post') {
+      if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+        displaySidebar();
+      }
+    }
+  });
+</script>
+
+
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      if (CONFIG.sidebar === 'always') {
+        displaySidebar();
+      }
+      if (isMobile()) {
+        FastClick.attach(document.body);
+      }
+    });
+  </script>
+
+  
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/lazyload.js"></script>
+  <script type="text/javascript">
+    $(function () {
+      $("#posts").find('img').lazyload({
+        placeholder: "/images/loading.gif",
+        effect: "fadeIn"
+      });
+    });
+  </script>
+</body>
+</html>
