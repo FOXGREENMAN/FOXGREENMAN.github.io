@@ -28,7 +28,7 @@
 
 
 
-  <meta name="keywords" content="Mac," />
+  <meta name="keywords" content="code," />
 
 
 
@@ -37,22 +37,22 @@
   <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.5.1" />
 
 
-<meta name="description" content="解决 Mac OS下安装遇到 Something s damaged and can’t be opened. You should move it to the Trash.">
+<meta name="description" content="HashMap (1.7) 简介HashMap是一个用于存储Key-Value键值对的集合, 每个键值对为一个Entry元素, 整个集合由一个数组构成;HashMap数组每一个元素的初始值都是Null; Put方法的原理调用 hashMap.put(“aaa”, 0) 时,插入一个Key为“apple”的元素,这时候我们需要利用一个哈希函数来确定Entry的插入位置(index): 1index">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Mac 下安装软件遇到 &quot;XXX&quot; s damaged and can’t be opened. You should move it to the Trash 解决方案">
-<meta property="og:url" content="http://yoursite.com/2018/10/21/open_outher_app_4_mac/index.html">
+<meta property="og:title" content="ConcurrentHashMap">
+<meta property="og:url" content="http://yoursite.com/2022/12/09/hashmap/index.html">
 <meta property="og:site_name" content="FOXMAN&#39;s club">
-<meta property="og:description" content="解决 Mac OS下安装遇到 Something s damaged and can’t be opened. You should move it to the Trash.">
+<meta property="og:description" content="HashMap (1.7) 简介HashMap是一个用于存储Key-Value键值对的集合, 每个键值对为一个Entry元素, 整个集合由一个数组构成;HashMap数组每一个元素的初始值都是Null; Put方法的原理调用 hashMap.put(“aaa”, 0) 时,插入一个Key为“apple”的元素,这时候我们需要利用一个哈希函数来确定Entry的插入位置(index): 1index">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="http://yoursite.com/2018/10/21/open_outher_app_4_mac/err_0.png">
-<meta property="og:image" content="http://yoursite.com/2018/10/21/open_outher_app_4_mac/mac_sys0.png">
-<meta property="og:image" content="http://yoursite.com/2018/10/21/open_outher_app_4_mac/mac_sys1.png">
-<meta property="article:published_time" content="2018-10-21T08:18:18.000Z">
-<meta property="article:modified_time" content="2018-10-21T08:32:20.000Z">
+<meta property="og:image" content="http://yoursite.com/2022/12/09/hashmap/hashmap_1.png">
+<meta property="og:image" content="http://yoursite.com/2022/12/09/hashmap/hashmap_2.png">
+<meta property="og:image" content="http://yoursite.com/2022/12/09/hashmap/hashmap_3.jpeg">
+<meta property="article:published_time" content="2022-12-08T21:24:32.000Z">
+<meta property="article:modified_time" content="2022-12-10T04:52:09.261Z">
 <meta property="article:author" content="FOXMAN">
-<meta property="article:tag" content="Mac">
+<meta property="article:tag" content="code">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://yoursite.com/2018/10/21/open_outher_app_4_mac/err_0.png">
+<meta name="twitter:image" content="http://yoursite.com/2022/12/09/hashmap/hashmap_1.png">
 
 
 <script type="text/javascript" id="hexo.configuration">
@@ -62,7 +62,7 @@
   };
 </script>
 
-  <title> Mac 下安装软件遇到 "XXX" s damaged and can’t be opened. You should move it to the Trash 解决方案 | FOXMAN's club </title>
+  <title> ConcurrentHashMap | FOXMAN's club </title>
 <meta name="generator" content="Hexo 5.4.0"></head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="en">
@@ -179,7 +179,7 @@
           
           
             
-              Mac 下安装软件遇到 "XXX" s damaged and can’t be opened. You should move it to the Trash 解决方案
+              ConcurrentHashMap
             
           
         </h1>
@@ -188,8 +188,8 @@
       <div class="post-meta">
         <span class="post-time">
           Posted on
-          <time itemprop="dateCreated" datetime="2018-10-21T16:18:18+08:00" content="2018-10-21">
-            2018-10-21
+          <time itemprop="dateCreated" datetime="2022-12-09T05:24:32+08:00" content="2022-12-09">
+            2022-12-09
           </time>
         </span>
 
@@ -198,8 +198,8 @@
             &nbsp; | &nbsp; In
             
               <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                <a href="/categories/tool/" itemprop="url" rel="index">
-                  <span itemprop="name">tool</span>
+                <a href="/categories/Java/" itemprop="url" rel="index">
+                  <span itemprop="name">Java</span>
                 </a>
               </span>
 
@@ -222,22 +222,38 @@
       
 
       
-        <span itemprop="articleBody"><p>解决 Mac OS下安装遇到 Something s damaged and can’t be opened. You should move it to the Trash.</p>
-<span id="more"></span>
+        <span itemprop="articleBody"><h3 id="HashMap-1-7-简介"><a href="#HashMap-1-7-简介" class="headerlink" title="HashMap (1.7) 简介"></a>HashMap (1.7) 简介</h3><p>HashMap是一个用于存储Key-Value键值对的集合, 每个键值对为一个Entry元素, 整个集合由一个数组构成;<br>HashMap数组每一个元素的初始值都是Null;</p>
+<h5 id="Put方法的原理"><a href="#Put方法的原理" class="headerlink" title="Put方法的原理"></a>Put方法的原理</h5><p>调用 hashMap.put(“aaa”, 0) 时,插入一个Key为“apple”的元素,这时候我们需要利用一个哈希函数来确定Entry的插入位置(index):</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">index = Hash(&quot;aaa&quot;);</span><br></pre></td></tr></table></figure>
+<p>而数组的每个位置则为一个链表结构, 当有新元素插入时, 会通过“头插法”写入到数组的对应位置的链表当中;<br><em>hash冲突</em>是指当不同的key通过上面的哈希函数计算出了相同的插入位置(index), 这时就会通过头插法插入到对应位置的链表头部;</p>
+<h5 id="Get方法的原理"><a href="#Get方法的原理" class="headerlink" title="Get方法的原理"></a>Get方法的原理</h5><p>首先把输入的Key通过哈希函数进行计算得到在map中的位置;<br>当得到的位置只有一个元素, 则直接返回; 如果由于前面提到的Hash冲突, 定位到的位置中是一个链表, 则会顺着对应位置的头节点, 一个一个的往下查找, 依次对比每个Entry的Key, 直到找到匹配的为止;</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">使用头插法的原因是因为HashMap的发明者认为这样更有效率</span><br></pre></td></tr></table></figure>
 
-<p>安装某个软件的时候遇到的，错误提示是网上找的截图；因为现在怎样设置都没法复现这个提示了，我又懒得重装就这样吧；</p>
-<p>提示：<br><img src="./err_0.png"></p>
-<p>简言之就是按正常流程下载了dmg包然后在Application里安装后，打开它会出现这个提示；</p>
-<p><em>常规解决方案：</em><br>System Preferences-&gt;Security &amp; Privacy并勾选AnyWhere就可以了；<br>但今天打开它发现不见了，OS版本 10.13.2；<br><img src="./mac_sys0.png"></p>
-<p>这时候需要打开终端输入：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo spctl --master-disable</span><br></pre></td></tr></table></figure>
-
-<p>然后你就会发现它又回来了：<br><img src="./mac_sys1.png"></p>
-<p>当然，如果想保护系统安全再次把它隐藏的话开启一次刚刚的配置就行了：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo spctl --master-enable</span><br></pre></td></tr></table></figure>
-
-
-<p>搞定！ʕ•͡•ʕ•͡•ʔ•͡•ʕ•͡•ʕ•͡•ʔ•͡• ʕ•͡•ʕ•͡•ʔ•͡• ̫•ʕ•͡•ʔ•͡• ʕ•͡•ʕ•͡•ʔ•͡ •ʕ•͡•ʕ•͡•ʔ•͡• ʕ•͡•ʕ•͡•ʔ•͡• ʕ•͡•ʕ•͡•ʔ•͡• ʕ•͡•ʕ•͡•ʔ•͡• ʕ•͡•ʕ•͡ •ʔ•͡• ʕ•͡•ʕ•͡•ʔ•͡• ʕ•͡•ʕ•͡•ʔ</p>
+<ul>
+<li>初始长度是多少,为什么?<br>服务于 indexFor(int h, int length) 方法, 即 <em>hashcode &amp; (length-1)</em> 使用位运算取index结果, 实际上几乎取决于key的hashcode的最后几位二进制数值, 而length为16的情况下从经验考虑能最大限度的符合hash算法均匀分布的原则;</li>
+<li>为什么要用数组加链表的结构<br>能方便解决hash冲突问题;</li>
+<li>是否可以用LinkedList代替数组?<br>可以;</li>
+<li>如果可以为什么不用?<br>用数组效率更高, 前面indexFor方法已经得到角标, 使用数组效率高于LinkedList, 而数组作为基础数据结构, 效率又高于ArrayList;</li>
+</ul>
+<h3 id="HashMap-1-7-高并发问题"><a href="#HashMap-1-7-高并发问题" class="headerlink" title="HashMap (1.7) 高并发问题"></a>HashMap (1.7) 高并发问题</h3><p>在JDK1.7中, 由于Hashmap采用的链表结构, 导致在高并发场景下可能出现链表成环的情况;</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">** 如何判断链表有环 *</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>当Hashmap容量达到饱和度后, 会进行扩容(Resize);<br>影响resize的条件:</p>
+<ul>
+<li>Capacity: HashMap的当前长度, HashMap的长度是2的幂;</li>
+<li>LoadFactor: HashMap负载因子, 默认值为0.75f<br>判断是否触发resize的方式:<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">HashMap.Size &gt;= Capacity * LoadFactor</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h4 id="扩容步骤"><a href="#扩容步骤" class="headerlink" title="扩容步骤"></a>扩容步骤</h4><ul>
+<li>创取当前table的2倍作为新table的大小;</li>
+<li>根据算出的新table的大小new出一个新的Entry数组来,名为newTable</li>
+<li>轮询原table的每一个位置, 将每个位置上连接的Entry,算出在新table上的位置, 并以链表形式连接</li>
+<li>原table上的所有Entry全部轮询完毕之后, 意味着原table上面的所有Entry已经移到了新的table上, HashMap中的table指向newTable</li>
+</ul>
+<h4 id="高并发问题"><a href="#高并发问题" class="headerlink" title="高并发问题"></a>高并发问题</h4><p>首先来看扩容的完整代码:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span> </span><br><span class="line"><span class="number">2</span> <span class="function"><span class="keyword">void</span> <span class="title">transfer</span><span class="params">(Entry[] newTable, <span class="keyword">boolean</span> rehash)</span> </span>&#123;</span><br><span class="line"><span class="number">3</span>    <span class="keyword">int</span> newCapacity = newTable.length;</span><br><span class="line"><span class="number">4</span>    <span class="keyword">for</span> (Entry&lt;K,V&gt; e : table) &#123;</span><br><span class="line"><span class="number">5</span>        <span class="keyword">while</span>(<span class="keyword">null</span> != e) &#123;</span><br><span class="line"><span class="number">6</span>            Entry&lt;K,V&gt; next = e.next; <span class="comment">// 线程B到这里被挂起, 线程A完成了扩容</span></span><br><span class="line"><span class="number">7</span>            <span class="keyword">if</span> (rehash) &#123;</span><br><span class="line"><span class="number">8</span>                e.hash = <span class="keyword">null</span> == e.key ? <span class="number">0</span> : hash(e.key);</span><br><span class="line"><span class="number">9</span>            &#125;</span><br><span class="line"><span class="number">10</span>            <span class="keyword">int</span> i = indexFor(e.hash, newCapacity);</span><br><span class="line"><span class="number">11</span>            e.next = newTable[i];</span><br><span class="line"><span class="number">12</span>            newTable[i] = e;</span><br><span class="line"><span class="number">13</span>            e = next;</span><br><span class="line"><span class="number">14</span>        &#125;</span><br><span class="line"><span class="number">15</span>    &#125;</span><br><span class="line"><span class="number">16</span> &#125;</span><br></pre></td></tr></table></figure>
+<p>然后出现以下场景:<br>当到达Resize的临界点时, 这时有两个线程A和B, 在同一时刻进行了put操作;</p>
+<p><img src="./hashmap_1.png" alt="新页面打开看大图"><br><img src="./hashmap_2.png" alt="新页面打开看大图"></p>
+<p>这时满足扩容条件, 线程A和线程B各自开始扩容第一步, 新建原有map两倍长度的数组;<br>然后下图是整个成环过程:<br><img src="./hashmap_3.jpeg" alt="新页面打开看大图"></p>
+<p>简单总结, HashMap之所以在并发下的扩容造成死循环, 是因为, 多个线程并发进行时, 因为一个线程先期完成了扩容, 将原的链表重新散列到自己的表中, 并且链表变成了倒序; 后一个线程再扩容时, 又进行自己的散列, 再次将倒序链表变为正序链表, 于是形成了一个环形链表;</p>
 </span>
       
     </div>
@@ -246,7 +262,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/Mac/" rel="tag">#Mac</a>
+            <a href="/tags/code/" rel="tag">#code</a>
           
         </div>
       
@@ -255,13 +271,11 @@
         <div class="post-nav">
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2019/11/17/redis_clean_key/" rel="prev">Redis - 内存回收相关浅谈</a>
-            
           </div>
 
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/09/22/Riemann_hypothesis_zhihu/" rel="next">【转】黎曼假设说的是什么？</a>
+              <a href="/2022/12/08/Removal-Success/" rel="next">Removal By Mac OS 13 Success!</a>
             
           </div>
         </div>
@@ -444,7 +458,7 @@
           <div class="post-toc">
             
             
-              <p class="post-toc-empty">This post does not have a Table Of Contents</p>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#HashMap-1-7-%E7%AE%80%E4%BB%8B"><span class="nav-number">1.</span> <span class="nav-text">HashMap (1.7) 简介</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#Put%E6%96%B9%E6%B3%95%E7%9A%84%E5%8E%9F%E7%90%86"><span class="nav-number">1.0.1.</span> <span class="nav-text">Put方法的原理</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Get%E6%96%B9%E6%B3%95%E7%9A%84%E5%8E%9F%E7%90%86"><span class="nav-number">1.0.2.</span> <span class="nav-text">Get方法的原理</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#HashMap-1-7-%E9%AB%98%E5%B9%B6%E5%8F%91%E9%97%AE%E9%A2%98"><span class="nav-number">2.</span> <span class="nav-text">HashMap (1.7) 高并发问题</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%89%A9%E5%AE%B9%E6%AD%A5%E9%AA%A4"><span class="nav-number">2.1.</span> <span class="nav-text">扩容步骤</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%AB%98%E5%B9%B6%E5%8F%91%E9%97%AE%E9%A2%98"><span class="nav-number">2.2.</span> <span class="nav-text">高并发问题</span></a></li></ol></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator"></div>
